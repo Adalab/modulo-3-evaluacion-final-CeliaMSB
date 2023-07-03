@@ -1,36 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import getDataFromApi from '../services/api';
+import CharacterList from './CharacterList';
 
 const App = () => {
-  const [characters, setCharacters] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [characterList, setCharacterList] = useState([]);
 
   useEffect(() => {
-    fetch('https://raw.githubusercontent.com/Adalab/rick-y-morty/master/data/rick-y-morty.json')
-      .then(response => response.json())
-      .then(data => {
-        setCharacters(data.results);
-      })
-  
+ getDataFromApi()
+      .then(cleanData => {
+        setCharacterList(cleanData);
+      });
   }, []);
-
-  function handleSearch (event) {
-    setSearchTerm(event.target.value);
-  };
-
-  const filteredCharacters = characters.filter(character =>
-    character.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const Character = ({ photo, name, species }) => {
-    return (
-      <div>
-        <img src={photo} alt={name} />
-        <h2>{name}</h2>
-        <p>{species}</p>
-      </div>
-    );
-  };
-
   return (
     <div>
       <header>
@@ -39,26 +19,16 @@ const App = () => {
       <main>
         <section>
           <form>
-            <input
-              type="text"
-              placeholder="Buscar por nombre..."
-              value={searchTerm}
-              onChange={handleSearch}
-            />
+            <input type="text" placeholder="Buscar por nombre..." />
           </form>
         </section>
         <section>
-          <ul>
-            {filteredCharacters.map((character) => (
-              <li key={character.id}>
-                <Character
-                  photo={character.image}
-                  name={character.name}
-                  species={character.species}
-                />
-              </li>
-            ))}
-          </ul>
+          <CharacterList
+          characterList={characterList}
+          />
+           
+         
+         
         </section>
       </main>
     </div>
