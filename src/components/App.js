@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import getDataFromApi from '../services/api';
 import CharacterList from './CharacterList';
+import Filters from './Filters';
 
 const App = () => {
   const [characterList, setCharacterList] = useState([]);
-  const [searchByName, setSearchByName]= useState('');
-  const [searchBySpecie, setSearchBySpecie]= useState('');
-
+  const [searchByName, setSearchByName] = useState('');
+  const [searchBySpecie, setSearchBySpecie] = useState('');
 
   useEffect(() => {
- getDataFromApi()
-      .then(cleanData => {
-        setCharacterList(cleanData);
-      });
+    getDataFromApi().then((cleanData) => {
+      setCharacterList(cleanData);
+    });
   }, []);
 
-  const handleChangeName = (event) => {
-  setSearchByName(event.target.value);
-  }
-  const handleChangeSpecie = (event) => {
-    setSearchBySpecie(event.target.value);
-  }
+  const handleFilters = (varName, varValue) => {
+    if (varName === 'name') {
+      setSearchByName(varValue);
+    } else if (varName === 'species') {
+      setSearchBySpecie(varValue);
+    }
+  };
+
   const filteredCharacters = characterList
-  .filter((eachContact) => eachContact.name.toLowerCase().includes(searchByName.toLowerCase()) )
-  .filter((eachContact) => eachContact.species.toLowerCase().includes(searchBySpecie.toLowerCase()) );
+    .filter((eachContact) =>
+      eachContact.name.toLowerCase().includes(searchByName.toLowerCase())
+    )
+    .filter((eachContact) =>
+      eachContact.species.toLowerCase().includes(searchBySpecie.toLowerCase())
+    );
 
   return (
     <div>
@@ -32,26 +37,14 @@ const App = () => {
       </header>
       <main>
         <section>
-          <form>
-            <input type="text"
-             placeholder="Buscar por nombre..." 
-             value={searchByName} 
-             onChange={handleChangeName}/>
-
-            <input type="text" 
-            placeholder="Buscar por especie..." 
-            value={searchBySpecie}
-            onChange={handleChangeSpecie}
-            />
-          </form>
+          <Filters
+            searchByName={searchByName}
+            searchBySpecie={searchBySpecie}
+            handleFilters={handleFilters}
+          />
         </section>
         <section>
-          <CharacterList
-          characterList={filteredCharacters}
-          />
-           
-         
-         
+          <CharacterList characterList={filteredCharacters} />
         </section>
       </main>
     </div>
