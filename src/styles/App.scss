@@ -1,0 +1,38 @@
+:root {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: white;
+  }
+  .box {
+    background-color: black;
+  }
+  .header {
+    text-align: center;
+  }
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .filters {
+    display: flex;
+    background-color: rgb(15, 158, 27);
+    border-radius: 5px;
+    border: solid 5px rgb(22, 243, 2);
+    padding-right: 20px;
+  }  
+  .character-card {
+    text-align: center;
+    background-color: rgb(220, 235, 9);
+    margin-top: 30px;
+    padding-top: 10px;
+    border-radius: 10px;
+    border: solid 5px rgb(218, 109, 7);
+    text-decoration: none;
+    font-weight: bold;
+    color: darkcyan;
+  }
+  .character-card > a {
+    text-decoration-line: none;
+    color: rgb(233, 11, 11);
+  }

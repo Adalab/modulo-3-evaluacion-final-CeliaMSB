@@ -46,10 +46,10 @@ const App = () => {
     const { pathname } = useLocation();
 
     const routeData = matchPath('/character/:characterId', pathname);
-    console.log(routeData);
+  
   
     const characterId = routeData?.params.characterId;
-    console.log(characterId);
+  
   
     const characterData = characterList.find((character) => character.id === parseInt(characterId));
     console.log(characterData)
@@ -77,7 +77,7 @@ const App = () => {
      </>
        }/>
        
-       <Route path='/contact/:characterId' element={<CharacterDetail characterData={characterData}/>}/>
+       <Route path='/character/:characterId' element={<CharacterDetail characterData={characterData}/>}/>
 
         </Routes>
 

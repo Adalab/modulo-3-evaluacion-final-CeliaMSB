@@ -6,7 +6,7 @@ function Filters({ searchByName, searchBySpecie, handleFilters }) {
     handleFilters('species', event.target.value);
   };
   return (
-    <form>
+    <form className="form">
       <input
         type="text"
         placeholder="Buscar por nombre..."

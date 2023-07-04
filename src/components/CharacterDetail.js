@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 function CharacterDetail({ characterData }) {
+ console.log(characterData)
   if (characterData) {
     return (
       <div className=''>
@@ -11,9 +12,9 @@ function CharacterDetail({ characterData }) {
           />
           <h2>Nombre:{characterData.name}</h2>
           <p>Especie:{characterData.species}</p>
-          <p>Planeta de origen: {characterData.origin}</p>
-          <p>Episodios: {characterData.episodes}</p>
-          <p>Estado: {characterData.status}</p>
+          <p>Planeta de origen:{characterData.origin}</p>
+          <p>Estado:{characterData.status}</p>
+          <p>Episodios:{characterData.numberOfEpisodes}</p>
           <Link to={'/'}>Volver</Link>
         </section>
       </div>
