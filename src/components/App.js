@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {useLocation, matchPath} from 'react-router';
+import ls from '../services/localStorage';
 import '../styles/App.scss'
 import getDataFromApi from '../services/api';
 import CharacterList from './CharacterList';
@@ -10,14 +11,19 @@ import CharacterDetail from './CharacterDetail';
 
 
 const App = () => {
-  const [characterList, setCharacterList] = useState([]);
+  const [characterList, setCharacterList] = useState(ls.get('characters', []));
   const [searchByName, setSearchByName] = useState('');
   const [searchBySpecie, setSearchBySpecie] = useState('');
 
   useEffect(() => {
-    getDataFromApi().then((cleanData) => {
-      setCharacterList(cleanData);
-    });
+    if (ls.get('characters', null) === null) {
+      getDataFromApi()
+        .then((cleanData) => {
+          setCharacterList(cleanData);
+
+          ls.set('characters', cleanData);
+        });
+    }
   }, []);
 
   const handleFilters = (varName, varValue) => {
@@ -52,10 +58,10 @@ const App = () => {
   
   return (
     <div className='box'>
-      <header>
+      <header className='header'>
         <h1>Rick and Morty</h1>
       </header>
-      <main>
+      <main className='main'>
         
         <Routes>
        <Route path='/' element={
@@ -65,7 +71,7 @@ const App = () => {
          searchBySpecie={searchBySpecie}
          handleFilters={handleFilters}
        />
-     <section>
+     <section className='filters'>
        <CharacterList characterList={filteredCharacters} />
      </section>
      </>
